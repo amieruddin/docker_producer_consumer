@@ -3,10 +3,10 @@
 
 2. configure docker
 
-$ sudo apt-get update
-
-	$ sudo apt install docker.io
-
+	$ sudo apt-get update
+	
+$ sudo apt install docker.io
+	
 $ docker --version
 
 $ pip install docker-compose
