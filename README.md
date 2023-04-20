@@ -1,12 +1,19 @@
 1. OS : Linux Ubuntu 20.04
 
+
 2. configure docker
+
 $ sudo apt-get update
-$ sudo apt install docker.io
+
+	$ sudo apt install docker.io
+
 $ docker --version
+
 $ pip install docker-compose
 
+
 3. configure rabbitmq
+
 $ sudo chmod 666 /var/run/docker.sock
 
 4. create python environment
