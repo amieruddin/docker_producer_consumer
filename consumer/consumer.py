@@ -1,3 +1,11 @@
+#----------------------------------------------------------
+#1. Consumer
+#   i   - connnect to raabbitmq
+#   ii  - save data to csv     
+#   iii - ack rmq
+#----------------------------------------------------------
+
+
 import os
 import pika
 import csv
@@ -9,7 +17,7 @@ def proces_message(ch, method, properties, body):
     information = json.loads(body)
     print(information)
 
-    #save into csv
+    #ii. save into csv
     header = ["device_id", "client_id", "created_at", "license_id", "image_frame", "prob", "tags"]
     rows = []
     for info in information['data']['preds']:
@@ -28,18 +36,18 @@ def proces_message(ch, method, properties, body):
     try:
         with open(data_csv, mode='a', newline='') as file:
             writer = csv.writer(file)
-            # if not os.path.isfile(data_csv):
-            writer.writerow(header)
+            if not os.path.isfile(data_csv):
+                writer.writerow(header)
             writer.writerows(rows)
     except:
         print('not save csv', flush=True)
 
     print(information , '\n', flush=True)
 
-    # acknowledge rmq
+    #iii. acknowledge rmq
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
-#connect to rabbitmq
+#i. connect to rabbitmq
 # host_IP = socket.gethostbyname_ex(socket.gethostname() + '.local')[-1][-1]
 connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq'))
 channel = connection.channel()
